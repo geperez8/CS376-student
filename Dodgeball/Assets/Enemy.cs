@@ -59,6 +59,12 @@ public class Enemy : MonoBehaviour
     private Vector2 HeadingToPlayer => OffsetToPlayer.normalized;
 
     /// <summary>
+    /// Time to shoot
+    /// </summary>
+    public float nextShootingTime = 0;
+
+
+    /// <summary>
     /// Initialize player and rigidBody fields
     /// </summary>
     // ReSharper disable once UnusedMember.Local
@@ -74,7 +80,12 @@ public class Enemy : MonoBehaviour
     // ReSharper disable once UnusedMember.Local
     void Update()
     {
-        // TODO
+        if (Time.time >= nextShootingTime)
+        {
+            Fire();
+
+            nextShootingTime = Time.time + CoolDownTime;
+        }
     }
 
     /// <summary>
@@ -83,7 +94,16 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Fire()
     {
-        // TODO
+        GameObject orb = Instantiate(OrbPrefab, (Vector2)transform.position + HeadingToPlayer.normalized, Quaternion.identity);
+
+        Rigidbody2D orbRB = orb.GetComponent<Rigidbody2D>();
+
+        if (orbRB)
+        {
+            orbRB.velocity = HeadingToPlayer * OrbVelocity;
+
+            orbRB.mass = OrbMass;
+        }
     }
 
     /// <summary>

@@ -1,0 +1,11 @@
+C:\Users\gerar\Documents\GitHub\CS376-student\Serializer\Serializer\bin\Debug\net6.0\Serializer.deps.json
+C:\Users\gerar\Documents\GitHub\CS376-student\Serializer\Serializer\bin\Debug\net6.0\Serializer.dll
+C:\Users\gerar\Documents\GitHub\CS376-student\Serializer\Serializer\bin\Debug\net6.0\Serializer.pdb
+C:\Users\gerar\Documents\GitHub\CS376-student\Serializer\Serializer\obj\Debug\net6.0\Serializer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\gerar\Documents\GitHub\CS376-student\Serializer\Serializer\obj\Debug\net6.0\Serializer.AssemblyInfoInputs.cache
+C:\Users\gerar\Documents\GitHub\CS376-student\Serializer\Serializer\obj\Debug\net6.0\Serializer.AssemblyInfo.cs
+C:\Users\gerar\Documents\GitHub\CS376-student\Serializer\Serializer\obj\Debug\net6.0\Serializer.csproj.CoreCompileInputs.cache
+C:\Users\gerar\Documents\GitHub\CS376-student\Serializer\Serializer\obj\Debug\net6.0\Serializer.dll
+C:\Users\gerar\Documents\GitHub\CS376-student\Serializer\Serializer\obj\Debug\net6.0\refint\Serializer.dll
+C:\Users\gerar\Documents\GitHub\CS376-student\Serializer\Serializer\obj\Debug\net6.0\Serializer.pdb
+C:\Users\gerar\Documents\GitHub\CS376-student\Serializer\Serializer\obj\Debug\net6.0\ref\Serializer.dll

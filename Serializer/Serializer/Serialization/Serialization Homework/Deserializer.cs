@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Assets.Serialization
@@ -224,6 +226,8 @@ namespace Assets.Serialization
                 GetChar();
                 SkipWhitespace();
             }
+
+            // Console.WriteLine(value.GetType());
             return (fieldName, value);
         }
 
@@ -284,7 +288,12 @@ namespace Assets.Serialization
             SkipWhitespace();
 
             // You've got the id # of the object.  Are we done now?
-            throw new NotImplementedException("Fill me in");
+
+            // if weve already deserialized this id based object, we retunr the object attached to the id
+            if (idTable.ContainsKey(id))
+            {
+                return idTable[id];
+            }
 
             // Assuming we aren't done, let's check to make sure there's a { next
             SkipWhitespace();
@@ -306,14 +315,47 @@ namespace Assets.Serialization
                     $"Expected a type name (a string) in 'type: ...' expression for object id {id}, but instead got {typeName}");
 
             // Great!  Now what?
-            throw new NotImplementedException("Fill me in");
+            // our ReadField return the variables (string hopefullyType, object typeName)
+            // type is our typeName as a string
+            // Now we want to create an instance of the desired type
+
+            // we get the assembly that has all the object types
+            // var assembly = Assembly.GetExecutingAssembly();
+
+            // find the object type that matches the complex object we are deserializing
+            // var foundType = assembly.GetTypes().First(t => t.Name == type);
+
+            // Console.Write(typeInstance);
+
+            // We then create an instance of the type of object we found
+            // object instance = System.Runtime.Serialization.FormatterServices.GetUninitializedObject(foundType);
+
+            // Console.Write($" {type} \n");
+            // Console.Write($" {foundType} \n");
+
+            var instance = Utilities.MakeInstance(type);
+
+            idTable[id] = instance;
+
 
             // Read the fields until we run out of them
             while (!End && PeekChar != '}')
             {
                 var (field, value) = ReadField(id);
+
+                Utilities.SetFieldByName(instance, field, value);
                 // We've got a field and a value.  Now what?
-                throw new NotImplementedException("Fill me in");
+
+                // Type tempType = instance.GetType();
+                // FieldInfo fieldInfo = tempType.GetField(field, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+                // Console.Write($"inside the loop, the field name is {field} and the value is {value} \n");
+
+                // if (fieldInfo != null)
+                // {
+                //    fieldInfo.SetValue(instance, value);
+                // }
+
             }
 
             if (End)
@@ -322,7 +364,7 @@ namespace Assets.Serialization
             GetChar();  // Swallow close bracket
 
             // We're done.  Now what?
-            throw new NotImplementedException("Fill me in");
+            return idTable[id];
         }
 
     }

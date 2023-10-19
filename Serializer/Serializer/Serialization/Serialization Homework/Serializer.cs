@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace Assets.Serialization
 {
@@ -179,6 +182,8 @@ namespace Assets.Serialization
             id = idCounter++;
             idTable[o] = id;
             return (id, true);
+
+
         }
 
         /// <summary>
@@ -190,28 +195,28 @@ namespace Assets.Serialization
             switch (o)
             {
                 case null:
-                    throw new NotImplementedException("Fill me in");
+                    Write("null");
                     break;
 
                 case int i:
-                    throw new NotImplementedException("Fill me in");
+                    Write(i);
                     break;
 
                 case float f:
-                    throw new NotImplementedException("Fill me in");
+                    Write(f);
                     break;
 
-                // Not: don't worry about handling strings that contain quote marks
+                // Note: don't worry about handling strings that contain quote marks
                 case string s:
-                    throw new NotImplementedException("Fill me in");
+                    Write($"\"{s}\"");
                     break;
 
                 case bool b:
-                    throw new NotImplementedException("Fill me in");
+                    Write(b);
                     break;
 
                 case IList list:
-                    throw new NotImplementedException("Fill me in");
+                    WriteList(list);
                     break;
 
                 default:
@@ -231,7 +236,44 @@ namespace Assets.Serialization
         /// <param name="o">Object to serialize</param>
         private void WriteComplexObject(object o)
         {
-            throw new NotImplementedException("Fill me in");
+            var idStatus = GetId(o);
+
+            if (idStatus.isNew)
+            {
+                Write($"#{idStatus.id}");
+
+                WriteBracketedExpression(
+                   "{ ",
+                   () =>
+                   {
+                       WriteField("type", o.GetType().Name, true);
+
+                       var type = o.GetType();
+
+
+
+                       // foreach (var property in type.GetFields(BindingFlags.NonPublic |
+                       //  BindingFlags.Instance | BindingFlags.Public))
+                       // {
+                       //    WriteField(property.Name, property.GetValue(o), false);
+                       // }
+
+                       var fields = Utilities.SerializedFields(o);
+
+                       foreach (var field in fields)
+                       {
+                           WriteField(field.Key, field.Value, false);
+
+                       }
+                   },
+                   " }");
+            }
+
+            else
+            {
+                Write($"#{idStatus.id}");
+            }
+
         }
     }
 }

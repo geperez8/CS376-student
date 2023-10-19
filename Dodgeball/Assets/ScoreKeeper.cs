@@ -14,15 +14,6 @@ public class ScoreKeeper : MonoBehaviour
     public static ScoreKeeper Singleton;
 
     /// <summary>
-    /// Add points to the score
-    /// </summary>
-    /// <param name="points">Number of points to add to the score; can be positive or negative</param>
-    public static void ScorePoints(int points)
-    {
-        Singleton.ScorePointsInternal(points);
-    }
-
-    /// <summary>
     /// Current score
     /// </summary>
     public int Score;
@@ -45,11 +36,22 @@ public class ScoreKeeper : MonoBehaviour
     }
 
     /// <summary>
+    /// Add points to the score
+    /// </summary>
+    /// <param name="points">Number of points to add to the score; can be positive or negative</param>
+    public static void ScorePoints(int points)
+    {
+        Singleton.ScorePointsInternal(points);
+    }
+
+    /// <summary>
     /// Internal, non-static, version of ScorePoints
     /// </summary>
     /// <param name="delta"></param>
     private void ScorePointsInternal(int delta)
     {
-        // TODO
+        Score += delta;
+
+        scoreDisplay.text = $"Score: {Score.ToString()}";
     }
 }
